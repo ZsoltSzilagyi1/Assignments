@@ -1,0 +1,133 @@
+/* Navbar */
+:root{
+    --my-color: rgb(71, 194, 108);
+}
+.nav-item {
+  padding: 10px;
+}
+
+.navbar span img{
+  width: 16px;
+}
+
+.navbar span span{
+  font-size: 16px;
+  margin: 5px;
+}
+
+.navbar .btn{
+  border: 0px;
+}
+
+/* Hero */
+#hero{
+    color: rgb(255, 255, 255);
+    background:url("/BootstrapLayout/img/imgs/hero.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    height: 60vh;
+    width: 100vw;
+}
+
+#hero h1{
+  background-color: var(--my-color);
+  width: fit-content;
+  font-size: 2rem;
+
+}
+
+#hero .row{
+  height: 100%;
+}
+
+/* Portofolio */
+
+#portofolio{
+  margin-top: 5%;
+}
+
+.portofolio-item{
+  padding: 5%;
+}
+
+#portofolio .icon{
+  padding: 5px;
+}
+
+#portofolio .icon i{
+  font-size: 56px;
+  color: var(--my-color);
+}
+
+/* Work */
+#work{
+  margin-top: 5%;
+}
+
+#work hr{
+  margin-left: 5%;
+  width: 85%;
+}
+
+#work span{
+  opacity: 0.75;
+}
+
+#work .work-place{
+  margin-bottom: 5%;
+}
+
+#work .work-info{
+  margin: 5% 0;
+}
+
+/* Blog */
+#blog span{
+  opacity: 0.7;
+  display: block;
+}
+
+#blog .blog-info{
+  margin: 5% 0;
+}
+
+/* About */
+#about{
+  background-color: rgb(39, 35, 35);
+  color: rgb(255,255,255);
+}
+
+#about .about-title{
+  font-weight: 900;
+}
+
+#about .about-content{
+  font-weight: 300;
+  opacity: 0.6;
+}
+
+#about table td{
+  background-color: rgb(39, 35, 35);
+  color: rgb(255, 255, 255);
+}
+
+#about table tr{
+  border-width: 1px;
+  border-right-width: 0;
+  border-left-width: 0  ;
+}
+
+/* Footer */
+#footer {
+  background-color: rgb(8, 8, 8);
+  height: 10vh;
+  width: 100%;
+}
+
+#footer span{
+  display: block;
+  color: white;
+  opacity: 0.6;
+  padding-top: 3vh;
+}
