@@ -22,7 +22,7 @@
 /* Hero */
 #hero{
     color: rgb(255, 255, 255);
-    background:url("/BootstrapLayout/img/imgs/hero.jpg");
+    background:url("https://raw.githubusercontent.com/ZsoltSzilagyi1/Assignments/master/BootstrapLayout/img/imgs/hero.jpg");
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
