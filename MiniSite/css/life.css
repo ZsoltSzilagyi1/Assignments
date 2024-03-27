@@ -1,0 +1,18 @@
+h2 {
+    font-family: 'Noto Serif', serif;
+    text-decoration: underline;
+}
+
+#earlylife, #education {
+    font-size: 1.3rem;
+}
+
+#earlylife, #education p {
+    padding: 2px;
+   
+}
+
+#education img {
+    float: right;
+}
+

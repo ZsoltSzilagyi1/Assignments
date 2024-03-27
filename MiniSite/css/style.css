@@ -1,0 +1,79 @@
+/* main part */
+body {
+    font-family: 'Times New Roman', helvetica, sans-serif;
+    font-size: 1.5rem;
+    line-height: 1.6;
+}
+
+/* aside part */
+
+.aside {
+
+    width: 20%;
+    height: 100%;
+    position: fixed
+    
+}
+
+.aside nav {
+    float: left;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 1.3rem;
+}
+
+a {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+    font-size: 1.6rem;
+   
+}
+
+ul {
+    list-style-type: square;
+}
+
+/* content part */
+
+.content {
+    float: right;
+    height: 100%;
+    width: 70%;
+    border-left: 2px solid #000;
+    padding: 2%;
+    padding-bottom: 16px;
+    
+    
+}
+
+hr {
+    height: 2px;
+    background-color: #000;
+}
+
+h1 { 
+    word-spacing: 4px;
+    font-family: 'Young Serif', serif;
+    font-weight: 900;
+    font-size: 4rem;
+}
+
+
+
+#lessbold {
+    font-weight: 600;
+}
+
+img {
+    float: left;
+    padding: 1rem;
+    border-radius: 100px;
+}
+
+h1>img:hover {
+    width: 30%;
+    z-index: 1;
+    
+}

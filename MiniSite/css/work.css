@@ -1,0 +1,24 @@
+/* table css */
+table{
+    font-size: 1.2rem;
+    text-align: center;
+    border-collapse: collapse ;
+    background-color: #e3e7df;
+}
+table, th, tr , td{
+    border: 1px solid #000;
+}
+
+th {
+    font-size: 2rem;
+    padding: 16px;
+}
+
+#tableheader {
+    background-color: #8a9b95;
+    padding: 2px;
+}
+
+.odd {
+    background-color: #adcdc2;
+}
