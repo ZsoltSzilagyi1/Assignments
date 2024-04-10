@@ -42,11 +42,22 @@
       }
 
       form i {
-        position: absolute;
-        right: -999px;
+        position: relative;
+        float: right; 
+        bottom: 35px;
+        right: 15px;
         margin-top: 7px;
         font-size: 20px;
       }
+
+      form i::before{
+        display: none;
+      }
+
+      .show::before{
+        display: inline;
+      }
+
     </style>
   </head>
 
@@ -56,15 +67,13 @@
         <div>
           <label for="username">Username:</label>
           <input id="username" type="text" />
-          <i id="goodUserIcon" class="fa-solid fa-check" style="color: #74df6f;"></i>
-          <i id="badUserIcon"class="fa-solid fa-xmark" style="color: #d82222;"></i>
+          <i id="userIcon" class="fa-solid fa-check"></i>
         </div>
 
         <div>
           <label for="password">Password:</label>
           <input id="password" type="password" />
-          <i id="goodPassIcon" class="fa-solid fa-check" style="color: #74df6f;"></i>
-          <i id="badPassIcon" class="fa-solid fa-xmark" style="color: #d82222;"></i>
+          <i id="passIcon" class="fa-solid"></i>
         </div>
 
         <div class="warnings">
@@ -97,7 +106,6 @@
             e.preventDefault();
             $(".warnings p").css("display","none");
             $(".succes").css("display","none");
-            $("form i").css("right","-999px");
             $("form input").removeClass();
             let goodPass = validatePass();
             let goodUser = validateUser();
@@ -132,25 +140,26 @@
             }
         }
 
-        function goodPass(){
-            $("#goodPassIcon").css("right","635px");
-            pass.addClass("succes-div");
-        }
-
-        function badPass(){
-            $("#badPassIcon").css("right","635px");
-            pass.addClass("fail-div");
-        }
-
         function goodUser(){
-            $("#goodUserIcon").css("right","635px");
-            user.addClass("succes-div");
+          $("#userIcon").removeClass("fa-xmark").addClass("fa-check show").css("color","#74df6f");
+          user.addClass("succes-div");
         }
 
         function badUser(){
-            $("#badUserIcon").css("right","635px");
-            user.addClass("fail-div");
+          $("#userIcon").removeClass("fa-check").addClass("fa-xmark show").css("color","#d82222");
+          user.addClass("fail-div");
         }
+
+        function goodPass(){
+          $("#passIcon").removeClass("fa-xmark").addClass("fa-check show").css("color","#74df6f");
+          pass.addClass("succes-div");
+        }
+
+        function badPass(){
+          $("#passIcon").removeClass("fa-check").addClass("fa-xmark show").css("color","#d82222");
+          pass.addClass("fail-div");
+        }
+
     </script>
     
   </body>
