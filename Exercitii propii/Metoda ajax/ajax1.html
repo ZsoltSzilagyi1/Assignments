@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button id="show">Show</button>
+    <p></p>
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script>
+        const showB = $("#show");
+       function getData(callback){
+        $.ajax({
+            type: "GET",
+            url: "https://jsonplaceholder.typicode.com/users/1/posts",
+            dataType: "json",
+            contentType: 'application/json',
+            success: function (data, status, error) {
+                callback(null, data);
+                    console.log("Succes:", status);
+            },
+            error: function (status, error) {
+                console.log("Error:", status, error);
+            },
+            complete: function (data) {
+                    console.log('Cererea a fost tratata complet', data)
+            }
+       })}
+
+       function show(data){
+            let info = "";
+            data.forEach(item => {
+                info += `
+                <ul>
+                    <li> Type: ${item.id} </li>
+                    <li> Setup: ${item.title} </li>
+                    <li> Punchline: ${item.body} </li>
+                    <li> --------------- </li>
+                `
+            })
+            $("p").append(info);
+       }
+
+       showB.on("click", function (e) {(
+         getData((error, result) =>{
+            if(error){
+                console.log("test error");
+            }else{
+                show(result);
+            }
+         })
+         )});
+
+
+    </script>
+</body>
+</html>
