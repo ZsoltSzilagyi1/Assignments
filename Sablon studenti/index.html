@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        class Student{
+            constructor(name, address, phone, course){
+                this.name       = name;
+                this.address    = address;
+                this.phone      = phone;
+                this.course     = course;
+            }
+
+            getInfo() {
+                console.log(`Displaying ${this.name}'s information:`)
+                console.log(`Name: ${this.name}.`);
+                console.log(`Address: ${this.address}`);
+                console.log(`Phone: ${this.phone}`);
+                console.log(`Course: ${this.course}`);
+                console.log(`---`);
+            }
+        }
+
+        var student1 = new Student('John Benson', 'High Park 36', '(507) 833-3567','Geography');
+        var student2 = new Student('Vasile Andrei', 'Bulevardul Mihai Viteazul 12', '06136569123', 'Matematica');
+        var student3 = new Student('George Cosbuc', 'Nr. 112', '0333452123','Limba Romana');
+        student1.getInfo();
+        student2.getInfo();
+        student3.getInfo();
+    </script>
+</body>
+</html>
