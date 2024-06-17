@@ -1,36 +1,103 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-</head>
-<body>
+    <style>
+      .student {
+        padding: 20px;
+      }
+      .name,
+      .adress,
+      .phone,
+      .course {
+        margin: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="students"></div>
+    <script
+      src="https://code.jquery.com/jquery-3.7.1.js"
+      integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+      crossorigin="anonymous"
+    ></script>
     <script>
-        class Student{
-            constructor(name, address, phone, course){
-                this.name       = name;
-                this.address    = address;
-                this.phone      = phone;
-                this.course     = course;
-            }
-
-            getInfo() {
-                console.log(`Displaying ${this.name}'s information:`)
-                console.log(`Name: ${this.name}.`);
-                console.log(`Address: ${this.address}`);
-                console.log(`Phone: ${this.phone}`);
-                console.log(`Course: ${this.course}`);
-                console.log(`---`);
-            }
+      class Student {
+        constructor(name, adress, phone, course) {
+          this.name = name;
+          this.adress = adress;
+          this.phone = phone;
+          this.course = course;
         }
 
-        var student1 = new Student('John Benson', 'High Park 36', '(507) 833-3567','Geography');
-        var student2 = new Student('Vasile Andrei', 'Bulevardul Mihai Viteazul 12', '06136569123', 'Matematica');
-        var student3 = new Student('George Cosbuc', 'Nr. 112', '0333452123','Limba Romana');
-        student1.getInfo();
-        student2.getInfo();
-        student3.getInfo();
+        getInfo() {
+          // return(`Name: ${this.name}, Adress: ${this.adress}, Phone: ${this.phone}, Course: ${this.course}`);
+          $("#students").append(`<div class=student>
+            <p class=name>Name: ${this.name}</p>
+            <p class=adress>Adress: ${this.adress}</p>
+            <p class=phone>Phone: ${this.phone}</p>
+            <p class=course>Course: ${this.course}</p>`);
+        }
+      }
+
+      let stringTest = [
+        "John Benson",
+        "High Park 36",
+        "(507) 833-3567",
+        "Geogpraphy",
+        "Vasile Andrei",
+        "Bulevardul Mihai Viteazul 12",
+        "06136569123",
+        "Matematica",
+        "George Cosbuc",
+        "Nr. 112",
+        "0333452123",
+        "Limba Romana",
+        "test name",
+        "test adress",
+        "test phone",
+        "test course",
+        "test name",
+        "test adress",
+        "test phone",
+        "test course",
+      ];
+
+      function createStudents(studentInfo, students) {
+        for (let i = 0; i < studentInfo.length; i++) {
+          if (i == 0 || i % 4 == 0) {
+            var student = new Student(
+              studentInfo[i],
+              studentInfo[i + 1],
+              studentInfo[i + 2],
+              studentInfo[i + 3]
+            );
+            student.getInfo();
+          }
+        }
+      }
+      createStudents(stringTest);
+
+      //   var student1 = new Student(
+      //     "John Benson",
+      //     "High Park 36",
+      //     "(507) 833-3567",
+      //     "Geography"
+      //   );
+      //   var student2 = new Student(
+      //     "Vasile Andrei",
+      //     "Bulevardul Mihai Viteazul 12",
+      //     "06136569123",
+      //     "Matematica"
+      //   );
+      //   var student3 = new Student(
+      //     "George Cosbuc",
+      //     "Nr. 112",
+      //     "0333452123",
+      //     "Limba Romana"
+      //   );
     </script>
-</body>
+  </body>
 </html>
