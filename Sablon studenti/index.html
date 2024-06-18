@@ -33,7 +33,10 @@
         }
 
         getInfo() {
-          // return(`Name: ${this.name}, Adress: ${this.adress}, Phone: ${this.phone}, Course: ${this.course}`);
+          return `Name: ${this.name}, Adress: ${this.adress}, Phone: ${this.phone}, Course: ${this.course}`;
+        }
+
+        printInfo() {
           $("#students").append(`<div class=student>
             <p class=name>Name: ${this.name}</p>
             <p class=adress>Adress: ${this.adress}</p>
@@ -42,30 +45,43 @@
         }
       }
 
-      let stringTest = [
-        "John Benson",
-        "High Park 36",
-        "(507) 833-3567",
-        "Geogpraphy",
-        "Vasile Andrei",
-        "Bulevardul Mihai Viteazul 12",
-        "06136569123",
-        "Matematica",
-        "George Cosbuc",
-        "Nr. 112",
-        "0333452123",
-        "Limba Romana",
-        "test name",
-        "test adress",
-        "test phone",
-        "test course",
-        "test name",
-        "test adress",
-        "test phone",
-        "test course",
-      ];
+      const url =
+        "https://v-dresevic.github.io/Advanced-JavaScript-Programming/data/students.txt";
 
-      function createStudents(studentInfo, students) {
+      // Folosind Promise
+      // fetch(url).then(function(res){
+      //   if(res.status !== 200){
+      //     throw Error(`Error while trying to fetch from set URL:${url}`);
+      //   }
+      //   return res.text();
+      // }).then(function(res){
+      //   createStudents(res.split('\n'))
+      // }).catch(function (e){
+      //   console.log(`Unexpected error: ${e.message}`);
+      // })
+
+      // Folosind async si await cu try, catch si finally
+      async function getData() {
+        try {
+          let res = await fetch(url);
+          if (res.status !== 200) {
+            throw Error(`Error while trying to fetch from set URL:${url}`);
+          }
+          let data = await res.text();
+          createStudents(data.split("\n"));
+        } catch (error) {
+          console.log(`Unexpected error: ${error.message}`);
+        } finally {
+          console.log(`Fetch operation from set URL ${url} is complete.`);
+        }
+      }
+
+      getData();
+
+      // Crearea unei liste de studenti si printarea studentilor
+      function createStudents(studentInfo) {
+        var studentList = [];
+        var k = 0;
         for (let i = 0; i < studentInfo.length; i++) {
           if (i == 0 || i % 4 == 0) {
             var student = new Student(
@@ -74,30 +90,13 @@
               studentInfo[i + 2],
               studentInfo[i + 3]
             );
-            student.getInfo();
+            studentList[k] = student;
+            studentList[k].printInfo();
+            console.log(studentList[k].getInfo());
+            k++;
           }
         }
       }
-      createStudents(stringTest);
-
-      //   var student1 = new Student(
-      //     "John Benson",
-      //     "High Park 36",
-      //     "(507) 833-3567",
-      //     "Geography"
-      //   );
-      //   var student2 = new Student(
-      //     "Vasile Andrei",
-      //     "Bulevardul Mihai Viteazul 12",
-      //     "06136569123",
-      //     "Matematica"
-      //   );
-      //   var student3 = new Student(
-      //     "George Cosbuc",
-      //     "Nr. 112",
-      //     "0333452123",
-      //     "Limba Romana"
-      //   );
     </script>
   </body>
 </html>
