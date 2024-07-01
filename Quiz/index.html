@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      #quiz {
+        margin-left: 20%;
+        font-size: 20px;
+      }
+
+      #quiz p {
+        font-size: 28px;
+        font-weight: 700;
+      }
+
+      #quiz button {
+        font-size: 16px;
+        margin-top: 2%;
+      }
+
+      #correctAnswersP {
+        margin-left: 20%;
+        font-size: 28px;
+        font-weight: 400;
+      }
+
+      span {
+        margin: 0 1%;
+      }
+    </style>
+  </head>
+  <body>
+    <p id="correctAnswersP">
+      Correct answers from previuos session:<span id="prevSession"></span>
+    </p>
+    <form id="quiz" name="Quiz">
+      <button type="submit" id="sbm">Trimite raspunsurile!</button>
+    </form>
+
+    <script
+      src="https://code.jquery.com/jquery-3.7.1.js"
+      integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      var quizForm = $("#quiz");
+      const submitButton = $("#sbm");
+      var correctAnswers = [];
+      var userCorrectAnswers = 0;
+
+      // display de intraberi quiz
+      let xhr = new XMLHttpRequest();
+      xhr.open(
+        "GET",
+        "https://www.link-elearning.com/linkdl/coursefiles/1470/quiz.json"
+      );
+      xhr.responseType = "json";
+      xhr.send();
+
+      xhr.onload = function () {
+        console.log(`Response has loaded: ${xhr.response}`);
+
+        let data = xhr.response;
+        var quizQList = Object.entries(data.quiz);
+        var newQ = "";
+
+        for (let i = 0; i < quizQList.length; i++) {
+          newQ += `<div id="qestion${i + 1}">
+        <p class="question">Question ${i + 1}: ${quizQList[i][1].question}</p>
+        <input type="radio" id="${quizQList[i][1].options[0]}" value="${
+            quizQList[i][1].options[0]
+          }" name="Question ${i + 1}" />
+        <label for="${quizQList[i][1].options[0]}">${
+            quizQList[i][1].options[0]
+          }</label><br />
+
+        <input type="radio" id="${quizQList[i][1].options[1]}" value="${
+            quizQList[i][1].options[1]
+          }" name="Question ${i + 1}" />
+        <label for="${quizQList[i][1].options[1]}">${
+            quizQList[i][1].options[1]
+          }</label><br />
+
+        <input type="radio" id="${quizQList[i][1].options[2]}" value="${
+            quizQList[i][1].options[2]
+          }" name="Question ${i + 1}"/>
+        <label for="${quizQList[i][1].options[2]}">${
+            quizQList[i][1].options[2]
+          }</label><br />
+
+        <input type="radio" id="${quizQList[i][1].options[3]}" value="${
+            quizQList[i][1].options[3]
+          }" name="Question ${i + 1}"/>
+        <label for="${quizQList[i][1].options[3]}">${
+            quizQList[i][1].options[3]
+          }</label><br />
+        </div>`;
+
+          correctAnswers[i] = quizQList[i][1].answer; //salvare raspunsuri corecte
+        }
+
+        quizForm.prepend(newQ);
+
+        displayFromLocal();
+      };
+
+      xhr.onerror = function () {
+        console.log(`Network error.`);
+      };
+
+      xhr.onprogress = function (e) {
+        console.log(`Received ${e.loaded} of ${e.total}`);
+      };
+      // end display
+
+      // salvare raspunsuri in local storage
+      submitButton.on("click", function (e) {
+        let quizAnswers = new FormData(document.getElementById("quiz"));
+        var questions = document.getElementsByClassName("question");
+        for (let i = 0; i < questions.length; i++) {
+          localStorage.setItem(
+            `Answer for Question ${i + 1}`,
+            quizAnswers.get(`Question ${i + 1}`)
+          );
+          if (quizAnswers.get(`Question ${i + 1}`) == correctAnswers[i]) {
+            userCorrectAnswers++;
+          }
+        }
+        localStorage.setItem("Correct answers", userCorrectAnswers); // enumerare raspunsuri corecte
+        alert(`Raspunsuri corecte: ${userCorrectAnswers}`); //
+      });
+      //end salvare
+
+      //display din local storage
+      function displayFromLocal() {
+        let questions = document.getElementsByClassName("question");
+        var answerOptions = document.getElementsByTagName("input");
+
+        for (let i = 0; i < questions.length; i++) {
+          let savedAnswer = localStorage.getItem(
+            `Answer for Question ${i + 1}`
+          );
+          for (let j = 0; j < answerOptions.length; j++) {
+            if (savedAnswer === answerOptions[j].value) {
+              answerOptions[j].setAttribute("checked", "true");
+              break;
+            }
+          }
+        }
+        let prevSession = document.getElementById("prevSession"); //display raspunsuri corecte
+        prevSession.innerHTML = localStorage.getItem("Correct answers"); //
+      }
+      //end display din local storage
+    </script>
+  </body>
+</html>
