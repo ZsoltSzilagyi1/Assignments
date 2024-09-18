@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <form>
+      <label for="startTime">Start time: </label>
+      <input type="time" id="startTime" />
+    </form>
+
+    <div id="nextSpawnTimes">
+     
+    </div>
+
+    <button id="show">show</button>
+
+    <script
+      src="https://code.jquery.com/jquery-3.7.1.js"
+      integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+      crossorigin="anonymous"
+    ></script>
+
+    <script>
+      const startTime = document.getElementById("startTime");
+      var nextSpawnDiv = document.getElementById("nextSpawnTimes");
+      var nextSpawnTimes = [];
+      var nextSpawnParagraph = ``;
+      const showB = document.getElementById("show");
+
+      showB.addEventListener("click", () => {
+        var primalSpawnHour = startTime.value.toString().split(":")[0];
+        var primalSpawnMin = startTime.value.toString().split(":")[1];
+        var primalSpawn = startTime.value.toString();
+
+        var nextSpawn = "";
+        var hour = parseInt(primalSpawnHour);
+        var minute = parseInt(primalSpawnMin);
+        var spawnInMinutes = 60 * hour + minute;
+        var a = 0;
+        var b = 30;
+
+        while(nextSpawn != primalSpawn){
+          spawnInMinutes += 90;
+          let nextSpawnHour = "";
+          let nextSpawnHourNumber = Math.floor(spawnInMinutes / 60);
+          console.log('next spawn hour nr',nextSpawnHourNumber)
+
+          if (nextSpawnHourNumber / 24 >= 1) {
+            nextSpawnHourNumber = nextSpawnHourNumber - (24 * Math.floor(nextSpawnHourNumber/24));
+            
+          }
+
+          if (nextSpawnHourNumber == 0) {
+            nextSpawnHour = "00";
+          } else if (nextSpawnHourNumber < 10) {
+            nextSpawnHour = "0" + nextSpawnHourNumber;
+          } else {
+            nextSpawnHour = nextSpawnHourNumber;
+          }
+
+          var nextSpawnMinute = "";
+          if (spawnInMinutes % 60 == 0) {
+            nextSpawnMinute = "00";
+          } else if (spawnInMinutes % 60 < 10) {
+            nextSpawnMinute = "0" + (spawnInMinutes % 60);
+          } else {
+            nextSpawnMinute = spawnInMinutes % 60;
+          }
+          nextSpawn = nextSpawnHour + ":" + nextSpawnMinute;
+
+          nextSpawnTimes.push(`<p>Next spawn time is at: ${nextSpawn}</p>`);
+        }
+
+        for(let i = 0;i < nextSpawnTimes.length;i++){
+          nextSpawnParagraph += nextSpawnTimes[i];
+        }
+
+        nextSpawnDiv.innerHTML = nextSpawnParagraph;
+          
+        
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WoW order setter - test</title>
+</head>
+<body>
+    <h1>Paladin buffs:</h1>
+    <label for="firstPaladin">First paladin - Retribution 1: </label>
+    <input type="text" id="firstPaladin" name="firstPaladin">
+    <label for="palaBuff1">Buff:</label>
+    <select id="palaBuff1" name="palaBuff1">
+        <option value="GBOK">Kings</option>
+        <option value="GBOM">Might</option>
+        <option value="GBOW">Wisdom</option>
+    </select>
+    <label for="auraOrderPala1">Aura:</label>
+    <select id="auraOrderPala1" name="auraOrderPala1">
+        <option value="Frost Aura">Frost</option>
+        <option value="Shadow Aura">Shadow</option>
+        <option value="Fire Aura">Fire</option>
+        <option value="Ret Aura">Retri</option>
+        <option value="Devo Aura">Devo</option>
+        <option value="Conc Aura">Conc</option>
+    </select>
+    <br>
+
+    <br>
+    <label for="secondPaladin">Second Paladin - Retribution 2: </label>
+    <input type="text" id="secondPaladin" name="secondPaladin">
+    <label for="palaBuff2">Buff:</label>
+    <select name="palaBuff2 "id="palaBuff2">
+        <option value="GBOM">Might</option>
+        <option value="GBOK">Kings</option>
+        <option value="GBOW">Wisdom</option>
+    </select>
+    <label for="auraOrderPala2">Aura:</label>
+    <select name="auraMasteryOrderPala2" id="auraOrderPala2">
+        <option value="Shadow Aura">Shadow</option>
+        <option value="Frost Aura">Frost</option>
+        <option value="Fire Aura">Fire</option>
+        <option value="Ret Aura">Retri</option>
+        <option value="Devo Aura">Devo</option>
+        <option value="Conc Aura">Conc</option>
+    </select>
+    <br>
+
+    <br>
+    <label for="holyPaladin">Holy Paladin : </label>
+    <input type="text" id="holyPaladin" name="holyPaladin">
+    <label for="palaBuff3">Buff:</label>
+    <select id="palaBuff3" name="palaBuff3">
+        <option value="GBOW">Wisdom</option>
+        <option value="GBOK">Kings</option>
+        <option value="GBOM">Might</option>
+    </select>
+    <label for="auraOrderPala3">Aura:</label>
+    <select id="auraOrderPala3" name="auraOrderPala3">
+        <option value="Conc Aura">Conc</option>
+        <option value="Frost Aura">Frost</option>
+        <option value="Shadow Aura">Shadow</option>
+        <option value="Fire Aura">Fire</option>
+        <option value="Ret Aura">Retri</option>
+        <option value="Devo Aura">Devo</option>
+    </select>
+    <br>
+
+    <br>
+    <label for="protPaladin">Protection Paladin : </label>
+    <input type="text" id="protPaladin" name="protPaladin">
+    <label for="palaBuff4">Buff:</label>
+    <select id="palaBuff4" name="palaBuff4">
+        <option value="GBOS">Sanctuary</option>
+        <option value="GBOK">Kings</option>
+        <option value="GBOM">Might</option>
+        <option value="GBOW">Wisdom</option>
+    </select>
+    <label for="auraOrderPala3">Aura:</label>
+    <select id="auraOrderPala4" name="auraOrderPala4">
+        <option value="Devo Aura">Devo</option>
+        <option value="Frost Aura">Frost</option>
+        <option value="Shadow Aura">Shadow</option>
+        <option value="Fire Aura">Fire</option>
+        <option value="Ret Aura">Retri</option>
+        <option value="Conc Aura">Conc</option>
+    </select>
+    <br>
+
+    <br>
+    <label for="firstAM">First AM:</label>
+    <select name="firstAM" id="firstAM">
+        <option value="retri1">Retribution1</option>
+        <option value="retri2">Retribution2</option>
+    </select>
+    <br>
+
+    <br>
+    <label for="firstDSAC">First DSac: </label>
+    <select name="firstDSAC" id="firstDSAC">
+        <option value="holy">Holy</option>
+        <option value="prot">Prot</option>
+    </select>
+    <br>
+
+    <br>
+    <h1>Inner Orders:</h1>
+    <label for="boomi1">Bommi 1:</label>
+    <input type="text" name="boomi1" id="boomi1">
+    <label for="inner1">Inner:</label>
+    <select name="inner1" id="inner1">
+        <option value="Hpal">Holy Pala</option>
+        <option value="Rsham">Resto Shamy</option>
+    </select>    
+    <br>
+    <label for="boomi2">Bommi 2:</label>
+    <input type="text" name="boomi2" id="boomi2">
+    <label for="inner2">Inner:</label>
+    <select name="inner2" id="inner2">
+        <option value="Rsham">Resto Shamy</option>
+        <option value="Hpal">Holy Pala</option>
+    </select>
+    <br>
+    <label for="backupInner">Bakcup Inner on call:</label>
+    <input type="text" name="backupInner" id="backupInner">
+    <br>
+
+    <br>
+    <button type="submit" id="okButton">Print Raid Warnings!</button>
+
+    <div id="printedBuffOrders"></div>
+    <div id="printedCDOrders"></div>
+    <div id="printedInnerOrders"></div>
+
+
+
+
+
+
+
+
+    <script>
+         let retri1 = document.getElementById('firstPaladin');
+         let retri1Buff = document.getElementById('palaBuff1');
+         let retri1Aura = document.getElementById('auraOrderPala1');
+         let retri1BuffIMG = document.getElementById('ret1BuffImg');
+
+         let retri2 = document.getElementById('secondPaladin');
+         let retri2Buff = document.getElementById('palaBuff2');
+         let retri2Aura = document.getElementById('auraOrderPala2');
+         let retri2BuffIMG = document.getElementById('ret2BuffImg')
+
+         let holy = document.getElementById('holyPaladin');
+         let holyBuff = document.getElementById('palaBuff3');
+         let holyAura = document.getElementById('auraOrderPala3');
+         let holyBuffIMG = document.getElementById('holyBuffImg')
+
+         let prot = document.getElementById('protPaladin');
+         let protBuff = document.getElementById('palaBuff4');
+         let protAura = document.getElementById('auraOrderPala4');
+         let protBuffIMG = document.getElementById('protBuffImg')
+
+         let auraMasteryOrder = document.getElementById('firstAM');
+         let dSacOrder = document.getElementById('firstDSAC');
+
+         let boomi1 = document.getElementById('boomi1');
+         let boomi2 = document.getElementById('boomi2');
+         let inner1 = document.getElementById('inner1');
+         let inner2 = document.getElementById('inner2');
+         let backupInner = document.getElementById('backupInner');
+         
+         let printedBuffOrders = document.getElementById('printedBuffOrders');
+         let printedCDOrders = document.getElementById('printedCDOrders');
+         let printedInnerOrders = document.getElementById('printedInnerOrders');
+
+         let GBOKhref = 'https://wow.zamimg.com/images/wow/icons/large/spell_magic_greaterblessingofkings.jpg';
+         let GBOM = 'https://wow.zamimg.com/images/wow/icons/large/spell_holy_fistofjustice.jpg';
+         let GBOW = 'https://wow.zamimg.com/images/wow/icons/large/spell_holy_greaterblessingofwisdom.jpg';
+         let GBOS = 'https://wow.zamimg.com/images/wow/icons/large/spell_holy_greaterblessingofsanctuary.jpg';
+
+         let submit = document.getElementById('okButton');
+         submit.addEventListener('click',function(e){
+            e.preventDefault();
+            
+            let palaBuffOrders = `<p>/rw ${retri1.value} - ${retri1Buff.value} - ${retri1Aura.value} //
+                 ${retri2.value} - ${retri2Buff.value} - ${retri2Aura.value} //
+                 ${holy.value} - ${holyBuff.value} - ${holyAura.value}  //
+                 ${prot.value} - ${protBuff.value} - ${protAura.value}</p>`;   
+
+            printedBuffOrders.innerHTML = palaBuffOrders;
+            
+           if(auraMasteryOrder.value == 'retri1'){
+            firstAM = retri1.value;
+            secondAM = retri2.value;
+           }else{
+            firstAM = retri2.value;
+            secondAM = retri1.value;
+           }
+
+           if(dSacOrder.value == 'holy'){
+            firstDSAC = holy.value;
+            secondDSAC = prot.value;
+           }else{
+            firstDSAC = prot.value;
+            secondDSAC = holy.value;
+           }
+
+            
+            let palaCDOrders = `<p>/rw First Aura Mastery: ${firstAM} -- Second Aura Mastery: ${secondAM}
+                 // First DSac: ${firstDSAC} -- Second DSac: ${secondDSAC}</p>`
+            printedCDOrders.innerHTML = palaCDOrders;
+            
+            let innerOrders = `<p>/rw ${boomi1.value} inner ${inner1.value} 
+                // ${boomi2.value} inner ${inner2.value}
+                // Backup inners: ${backupInner.value}</p>`;
+            printedInnerOrders.innerHTML = innerOrders;    
+
+
+
+         })
+    </script>
+</body>
+</html>
