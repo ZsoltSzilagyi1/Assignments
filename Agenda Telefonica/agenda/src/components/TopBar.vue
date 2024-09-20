@@ -6,7 +6,8 @@
             <button class="btn btn-outline-dark" type="submit">Search</button>
         </form>
         <div class="nav-btns">
-            <button type="button" class="btn btn-primary" @click="testShow()">Add Number</button>
+            <button type="button" class="btn btn-primary" @click="newNumberWindow()">Add Number</button>
+            <button type="button" @click="clearstorage()">clear</button>
         </div>
     </nav>
 
@@ -19,44 +20,49 @@
             </tr>
         </thead>
         <tbody>
-            <TableRow v-for="x in numbers" v-bind:id="x.id" v-bind:name="x.nume" v-bind:phone="x.numar" @click=test(x.id) />
+            <tr v-for="x in numbers">
+                <td class="listID">#{{ x.id }}</td>
+                <td class="listName">{{ x.nume }}</td>
+                <td class="listNumber">{{ x.numar }}</td>
+                <td class="listEdit"><button type="button" class="btn btn-info"
+                        @click="editNumberWindow(x.id)">Edit</button></td>
+                <td class="listDelete"><button type="button" class="btn btn-danger" @click="test(x.id + 1)">Delete</button>
+                </td>
+            </tr>
         </tbody>
+
     </table>
 
     <form id="nameInfo" v-show="showInfo">
         <div class="name">
             <label for="name" class="form-label">Name:</label>
-            <input type="text" id="name" for="name" class="input" placeholder="asd" v-model="person.name">
+            <input type="text" id="name" for="name" class="input" v-model="person.name">
         </div>
         <div class="phoneNumber">
             <label for="number" class="form-label">Phone:</label>
-            <input type="tel" id="phoneNumber" for="phoneNumber" class="input" placeholder="1234" v-model="person.phone">
+            <input type="tel" id="phoneNumber" for="phoneNumber" class="input" v-model="person.phone">
         </div>
         <div class="phoneNumberSecond">
             <label for="number" class="form-label">Phone 2:</label>
-            <input type="tel" id="phoneNumber" for="phoneNumber" class="input" placeholder="1234"
-                v-model="person.secondPhone">
+            <input type="tel" id="phoneNumber" for="phoneNumber" class="input" v-model="person.secondPhone">
         </div>
         <div class="email">
             <label for="email" class="form-label">E-mail:</label>
-            <input type="email" id="email" for="email" class="input" placeholder="1234" v-model="person.email">
+            <input type="email" id="email" for="email" class="input" v-model="person.email">
         </div>
         <div class="buttons">
-            <button type="button" class="btn btn-success form-button save-btn" @click="saveNumber()">Save Number</button>
-            <button type="button" class="btn btn-danger form-button delete-btn">Delete Number</button>
-            <button type="button" class="btn btn-primary form-button duplicate-btn">Duplicate Number</button>
+            <button type="button" class="btn btn-success form-button save-btn" @click="newNumber()">Save New Number</button>
+            <button type="button" class="btn btn-danger form-button delete-btn" @click="deleteNumber(this.currentId)">Delete
+                Number</button>
+            <button type="button" class="btn btn-primary form-button duplicate-btn" :disabled='notClickable'
+                @click="editNumber(this.currentId)">Save Changes</button>
         </div>
     </form>
 </template>
 
 <script>
-import TableRow from './TableRow.vue';
 export default {
     name: 'TopBar',
-
-    components: {
-        TableRow: TableRow
-    },
 
     data() {
         return {
@@ -68,20 +74,32 @@ export default {
                 secondPhone: "",
                 email: "",
             },
-            numbers: []
+            numbers: [],
+            currentId: 0,
+            notClickable: true,
         }
     },
 
     methods: {
-        testShow() {
+        clearstorage() {
+            localStorage.clear();
+        },
+        newNumberWindow() {
             this.showInfo = true;
+            this.notClickable = true;
         },
 
-        test(id) {
-            console.log(`test from ${id}`);
+        clearPerson() {
+
+            this.person.name = '',
+                this.person.phone = '',
+                this.person.secondPhone = '',
+                this.person.email = ''
+
         },
 
-        saveNumber() {
+
+        newNumber() {
             this.person.id += 1;
             var data = {
                 id: this.person.id,
@@ -90,15 +108,44 @@ export default {
                 numarDoi: this.person.secondPhone,
                 email: this.person.email,
             }
+            this.clearPerson();
+            this.numbers.push(data);
             this.addNumber(data);
+            this.showInfo = false;
         },
 
         addNumber(data) {
-            this.numbers.push(data);
             let storageData = JSON.stringify(data);
             localStorage.setItem(data.id, storageData);
-            console.log(this.numbers);
-            console.log(localStorage.getItem(1));
+        },
+
+        editNumberWindow(id) {
+            this.currentId = id;
+            this.showInfo = true;
+            this.notClickable = false;
+            this.person.name = this.numbers[id - 1].nume;
+            this.person.phone = this.numbers[id - 1].numar;
+            this.person.secondPhone = this.numbers[id - 1].numarDoi;
+            this.person.email = this.numbers[id - 1].email;
+        },
+
+        editNumber(id) {
+            this.numbers[id - 1].nume = this.person.name;
+            this.numbers[id - 1].numar = this.person.phone;
+            this.numbers[id - 1].numarDoi = this.person.secondPhone;
+            this.numbers[id - 1].email = this.person.email;
+            localStorage.setItem(id, JSON.stringify(this.numbers[id - 1]));
+            this.showInfo = false;
+        },
+
+        deleteNumber(id) {
+            this.person.id = this.person.id - 1;
+            this.numbers.splice(id - 1, 1);
+            for (let i = 0; i <= this.numbers.length; i++) {
+                if (this.numbers[i].id > id) {
+                    this.numbers[i].id = this.numbers[i].id - 1;
+                }
+            }
 
         }
     }
