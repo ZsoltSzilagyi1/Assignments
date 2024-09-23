@@ -1,10 +1,10 @@
 <script setup>
 
-import TopBar from './components/TopBar.vue'
+import Agenda from './components/Agenda.vue'
 </script>
 
 <template>
-  <TopBar />
+  <Agenda />
 </template>
 
 <style scoped>
