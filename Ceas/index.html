@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ceas Analogic</title>
+    <style>
+      #my-canvas {
+        border: #cacaca 1px solid;
+      }
+      .centering {
+        max-width: fit-content;
+        margin: auto;
+      }
+      h1 {
+        max-width: fit-content;
+        margin: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="centering">
+      <h1>Ceas Analogic</h1>
+      <canvas id="my-canvas" width="800" height="700">
+        Your web browser does not support canvas element.
+      </canvas>
+    </div>
+    <script src="https://code.createjs.com/1.0.0/createjs.min.js"></script>
+    <script>
+      window.onload = init;
+      let stage;
+
+      function init() {
+        stage = new createjs.Stage("my-canvas");
+        let ceasRadius = 300;
+        let ceasX = stage.canvas.width / 2;
+        let ceasY = stage.canvas.height / 2;
+        let ceas = new createjs.Shape();
+        ceas.graphics
+          .beginStroke("black")
+          .setStrokeStyle(1)
+          .drawCircle(ceasX, ceasY, ceasRadius);
+        stage.addChild(ceas);
+
+        for (let i = 0; i < 60; i++) {
+          let minuteMarker = new createjs.Shape();
+          minuteMarker.graphics
+            .beginStroke("black")
+            .setStrokeStyle(1)
+            .drawRect(0, 295, 0, 10);
+          minuteMarker.x = ceasX;
+          minuteMarker.y = ceasY;
+          minuteMarker.rotation = 6 * i;
+          stage.addChild(minuteMarker);
+          stage.update();
+        }
+
+        for (let i = 0; i < 60; i++) {
+          let hourMarker = new createjs.Shape();
+          hourMarker.graphics
+            .beginStroke("black")
+            .setStrokeStyle(1)
+            .drawRect(0, 295, 1, 15);
+          hourMarker.x = ceasX;
+          hourMarker.y = ceasY;
+          hourMarker.rotation = 30 * i;
+          stage.addChild(hourMarker);
+          stage.update();
+        }
+
+        let ore = [12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+        
+
+        for(let i = 0; i < 4; i++){
+             switch(i){
+                case 0: indexX = 0; indexY = -1; break;
+                case 1: indexX = 1; indexY = 0; break;
+                case 2: indexX = 0; indexY = 1; break;
+                case 3: indexX = -1; indexY = 0; break;
+             }
+             let ora = new createjs.Text(`${ore[i]}`,'20px Arial','black');
+             ora.set({
+                 textAlign: "center",
+                 textBaseline: "middle",
+                 x: ceasX + indexX*ceasRadius,
+                 y: ceasY + indexY*ceasRadius
+             })
+            
+             stage.addChild(ora);
+             stage.update()
+        }
+
+
+        // secunda, minuta si ora de start cu rectificarea orei
+        let startingSecond = 0;
+        let startingMinute = 4;
+        let startingHour = 14;
+
+        if (startingHour > 12) {
+          startingHour = startingHour - 12;
+        }
+
+        // crearea manei de minut
+        let minuteHand = new createjs.Shape();
+        minuteHand.graphics
+          .setStrokeStyle(3)
+          .beginStroke("black")
+          .drawRect(0, 0, 0, ceasRadius - 10)
+          .endStroke();
+        minuteHand.regX = 0;
+        minuteHand.regY = 0;
+        minuteHand.x = 400;
+        minuteHand.y = 350;
+        minuteHand.rotation = startingMinute * 6 + 180;
+        stage.addChild(minuteHand);
+
+        //crearea manei de ora
+        let hourHand = new createjs.Shape();
+        hourHand.graphics
+          .setStrokeStyle(3)
+          .beginStroke("black")
+          .drawRect(0, 0, 0, ceasRadius - 100)
+          .endStroke();
+        hourHand.regX = 0;
+        hourHand.regY = 0;
+        hourHand.x = 400;
+        hourHand.y = 350;
+        hourHand.rotation = startingHour * 30 + 180;
+        stage.addChild(hourHand);
+
+        // crearea manei de secunda
+        let secondHand = new createjs.Shape();
+        secondHand.graphics
+          .setStrokeStyle(3)
+          .beginStroke("red")
+          .drawRect(0, 0, 0, ceasRadius - 50)
+          .endStroke();
+        secondHand.regX = 0;
+        secondHand.regY = 0;
+        secondHand.x = 400;
+        secondHand.y = 350;
+        secondHand.rotation = startingSecond * 6 + 180;
+        stage.addChild(secondHand);
+
+        stage.update();
+
+        // functionarea ceasului: tickerul face update in fiecare secunda mutand mana de secunda 6 grade. (6 x 60 = 360). Cand rotirea ar fi de 360 de grade, se reincepe de la 0 si mana de minut se muta 6 grade.
+        // La fel se intampla sa la mana de ora in legatura cu mana de minut, dar mana de ora se mutea 30 de grade. (12 x 30 = 360).
+        createjs.Ticker.setFPS(1);
+        createjs.Ticker.addEventListener("tick", onTick);
+
+        function onTick() {
+          secondHand.rotation += 6;
+          if (secondHand.rotation == startingSecond + 540) {
+            secondHand.rotation = 180;
+            minuteHand.rotation += 6;
+          }
+          if (minuteHand.rotation == startingMinute + 540) {
+            minuteHand.rotation = 180;
+            hourHand.rotation += 30;
+          }
+          if (hourHand.rotation == startingHour + 540) {
+            hourHand.rotation = 180;
+          }
+          stage.update();
+        }
+      }
+    </script>
+  </body>
+</html>
